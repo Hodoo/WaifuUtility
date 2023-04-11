@@ -40,22 +40,24 @@ client.on(Events.MessageCreate, (message) => {
 				let match = description.match(regex);
 				let voteUser = client.users.resolve(match[1])
 				let voteURL = match[2]
-				setTimeout(() => {
-					voteUser.send({
-						embeds: [
-							{
-								description: `[Time to vote!](${voteURL})`,
-								color: "15419068"
-							}
-						]
-					})
-				}, 43200000);
+				setTimeout(voteDM, 43200000, voteUser, voteURL);
 			}
 		} catch {
 			return
 		}
   };
 });
+
+function voteDM(user, url) {
+	user.send({
+		embeds: [
+			{
+				description: `[Time to vote!](${url})`,
+				color: "15419068"
+			}
+		]
+	})
+};
 
 
 // Log in to Discord with your client's token

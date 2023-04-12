@@ -38,9 +38,7 @@ client.on(Events.MessageCreate, (message) => {
 			let description = message.embeds[0].data.description
 			if (description.includes('made three Cards drop')) {
 				let match = description.match(regex);
-				let voteUser = client.users.resolve(match[1])
-				let voteURL = match[2]
-				setTimeout(voteDM, 43200000, voteUser, voteURL);
+				setTimeout(voteDM, 43200000, match[1], match[2]);
 			}
 		} catch {
 			return
@@ -48,8 +46,9 @@ client.on(Events.MessageCreate, (message) => {
   };
 });
 
-function voteDM(user, url) {
-	user.send({
+async function voteDM(user, url) {
+	let voteUser = await client.users.fetch(user);
+	voteUser.send({
 		embeds: [
 			{
 				description: `[Time to vote!](${url})`,
